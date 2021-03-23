@@ -25,21 +25,11 @@ if method == 'POST':
 
 
 # get the apikey and token from files
-try:
-    apikeyfile = open('../data/apikey.txt')
+with open('../data/apikey.txt') as apikeyfile:
     apikey = apikeyfile.read()
-except Exception as e:
-    print(f"Error reading api key from file: {e}")
-finally:
-    apikeyfile.close()
 
-try:
-    apitokenfile = open('../data/apitoken.txt')
+with open('../data/apitoken.txt') as apitokenfile:
     apitoken = apitokenfile.read()
-except Exception as e:
-    print(f"Error reading api token from file: {e}")
-finally:
-    apitokenfile.close()
 
 
 # get cards in list by list id and format response as json
@@ -92,22 +82,28 @@ def course_info_printer():
     except TypeError:
         print(f'API request was not successful, error code {response}')
 
-
+### Actual HTML page content starts here ###
 print("Content-type: text/html;charset=utf-8")
 print("")
 print('<html>')
 print('<head>')
 print('<title>Study status checker</title>')
+print('<meta charset="utf-8">')
+print('<meta name="robots" content="noindex">')
+print('<meta name="author" content="Jutta Hänninen">')
+print('<meta name="viewport" content="width=device-width, initial-scale=1.0">')
+print('<link rel="stylesheet" href="styles/style.css">')
+print('<link rel="shortcut icon" href="favicon.ico">')
 print('</head>')
-print('<body style="background-color:#f2f2f2; font-family:Verdana, sans serif; padding:2%">')
+print('<body style="padding: 2%">')
 print('<h2>Study status checker</h2>')
 print("""<p>With this tool you can check which courses Jutta is currently working on,<br>
 which courses she has lately finished but which are waiting for credits still,<br>
 and which courses she has officially finished and got credits for.</p>""")
 print('<form action="" method="post">')
-print('<input type="submit" name="i" value="Show courses in progress">')
-print('<input type="submit" name="w" value="Show courses waiting for credits">')
-print('<input type="submit" name="f" value="Show finished courses">')
+print('<input type="submit" name="i" value="Show courses in progress" class="action-call">')
+print('<input type="submit" name="w" value="Show courses waiting for credits" class="action-call">')
+print('<input type="submit" name="f" value="Show finished courses" class="action-call">')
 print('</form>')
 print('<p>')
 if selection == 'i':
